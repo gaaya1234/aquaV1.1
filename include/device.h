@@ -9,7 +9,6 @@
 #include "EspSerial.h"
 #include "Buzzer/BuzzerContext.h"
 #include "AnimatedLcd.h"
-#include "Barrier.h"
 
 class Device {
   CardReader cardReader;
@@ -19,8 +18,6 @@ class Device {
   BuzzerTrack buzzer;
   BuzzerContext buzzerContext;
   EspSerial espSerial;
-  Barrier barrier;
-
   static uint8_t versionBuf[CommandLen::GET_VERSION_RESP_LEN + CMD_LEN_DELTA];
   uint8_t listeningCardReaderCmdId = 0xFF;
 

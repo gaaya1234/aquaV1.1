@@ -6,13 +6,16 @@
 #define VERSION_BUILD 1
 #define VERSION String(VERSION_MAJOR) + "." + VERSION_MINOR + "." + VERSION_BUILD
 
-#define LCD_ENABLE_PIN     3
-#define LCD_CLK_PIN        5
-#define LCD_DATA_PIN       7
-#define BUZZER_PIN         12
-#define CARD_READER_TX_PIN 52
-#define CARD_READER_RX_PIN 53
-#define BUILTIN_LED        13
+#define LCD_ENABLE_PIN          3
+#define LCD_CLK_PIN             5
+#define LCD_DATA_PIN            7
+#define BUZZER_PIN              12
+#define CARD_READER_TX_PIN      52
+#define CARD_READER_RX_PIN      53
+#define BUILTIN_LED             13
+#define WATER_COUNTING_PIN      4
+#define BUTTON_PIN              2
+
 
 // TIME
 #define ChargingThresholdTime   60000
