@@ -1,0 +1,19 @@
+{
+	"name": "Lumini_tmp",
+	"version": "0.0.1",
+	"description": "",
+	"keywords": "",
+	"authors": {
+		"name": "Dugar Badagarov",
+		"email": "hustonashford@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/HoustonAsh/LuminiLedRing.git"
+	},
+	"frameworks": "*",
+	"platforms": "*",
+	"dependencies": {
+		"fastled/FastLED": "^3.5.0"
+	}
+}
