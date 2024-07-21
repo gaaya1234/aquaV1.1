@@ -9,99 +9,99 @@ Device::Device() :
   espSerial([](Packet& p) {device.espReaden(p);}) {
 }
 
-void Device::espReaden(Packet& p) {
-  Command cmd = Command(p[2]);
+// void Device::espReaden(Packet& p) {
+//   Command cmd = Command(p[2]);
 
-  switch (cmd) {
-  case Command::PRINT_ROW:
-  {
-    uint8_t row;
-    char buf[128] = "";
-    espSerial.parsePrintRowPacket(p, row, buf);
-    printRow(row, buf);
-  }
-  break;
-  case Command::PRINT_ROWS:
-  {
-    char b1[128], b2[128], b3[128];
-    espSerial.parsePrintPacket(p, b1, b2, b3);
-    printRows(b1, b2, b3);
-  }
-  break;
-  case Command::PRINT_ANIMATED_ROW:
-  {
-    uint8_t row;
-    char buf[128];
-    TextAnimation a;
-    uint16_t d;
-    espSerial.parsePrintAnimatedPacket(p, row, buf, a, d);
-    printAnimatedRow(row, buf, a, d);
-  }
-  break;
-  case Command::GET_VERSION:
-  {
-    versionBuf[CMD_ID_INDEX - CMD_LEN_DELTA] = p[CMD_ID_INDEX];
-    Packet vp(versionBuf, CommandLen::GET_VERSION_RESP_LEN + CMD_LEN_DELTA);
-    espSerial.sendPacket(vp);
-  }
-  break;
-  case Command::CARD_READER_REQUEST:
-    listenCardReader(p[CMD_ID_INDEX]);
-    break;
-  case Command::CONTROL_BARRIER:
-  {
-    bool isClose;
-    espSerial.parseBarrierControlPacket(p, isClose);
-    if (isClose) barrier.close();
-    else barrier.open();
-  }
-  break;
-  case Command::CONTROL_BUZZER:
-  {
-    uint16_t freqs[128];
-    uint8_t freqsLen;
-    uint16_t timings[128];
-    uint8_t timingsLen;
+//   switch (cmd) {
+//   case Command::PRINT_ROW:
+//   {
+//     uint8_t row;
+//     char buf[128] = "";
+//     espSerial.parsePrintRowPacket(p, row, buf);
+//     printRow(row, buf);
+//   }
+//   break;
+//   case Command::PRINT_ROWS:
+//   {
+//     char b1[128], b2[128], b3[128];
+//     espSerial.parsePrintPacket(p, b1, b2, b3);
+//     printRows(b1, b2, b3);
+//   }
+//   break;
+//   case Command::PRINT_ANIMATED_ROW:
+//   {
+//     uint8_t row;
+//     char buf[128];
+//     TextAnimation a;
+//     uint16_t d;
+//     espSerial.parsePrintAnimatedPacket(p, row, buf, a, d);
+//     printAnimatedRow(row, buf, a, d);
+//   }
+//   break;
+//   case Command::GET_VERSION:
+//   {
+//     versionBuf[CMD_ID_INDEX - CMD_LEN_DELTA] = p[CMD_ID_INDEX];
+//     Packet vp(versionBuf, CommandLen::GET_VERSION_RESP_LEN + CMD_LEN_DELTA);
+//     espSerial.sendPacket(vp);
+//   }
+//   break;
+//   case Command::CARD_READER_REQUEST:
+//     listenCardReader(p[CMD_ID_INDEX]);
+//     break;
+//   case Command::CONTROL_BARRIER:
+//   {
+//     bool isClose;
+//     espSerial.parseBarrierControlPacket(p, isClose);
+//     if (isClose) barrier.close();
+//     else barrier.open();
+//   }
+//   break;
+//   case Command::CONTROL_BUZZER:
+//   {
+//     uint16_t freqs[128];
+//     uint8_t freqsLen;
+//     uint16_t timings[128];
+//     uint8_t timingsLen;
 
-    espSerial.parseBuzzerPacket(p, freqs, freqsLen, timings, timingsLen);
+//     espSerial.parseBuzzerPacket(p, freqs, freqsLen, timings, timingsLen);
 
-    Serial.print((String)"[CONTROL BUZZER] freqLen = " + (int)freqsLen + ", freqs = [ ");
+//     Serial.print((String)"[CONTROL BUZZER] freqLen = " + (int)freqsLen + ", freqs = [ ");
 
-    for (int i = 0; i < freqsLen; ++i) {
-      Serial.print(freqs[i]);
-      Serial.print(" ");
-    }
+//     for (int i = 0; i < freqsLen; ++i) {
+//       Serial.print(freqs[i]);
+//       Serial.print(" ");
+//     }
 
-    Serial.print((String)"], timingsLen = " + (int)timingsLen + ", timings = [ ");
+//     Serial.print((String)"], timingsLen = " + (int)timingsLen + ", timings = [ ");
 
-    for (int i = 0; i < timingsLen; ++i) {
-      Serial.print(timings[i]);
-      Serial.print(" ");
-    }
+//     for (int i = 0; i < timingsLen; ++i) {
+//       Serial.print(timings[i]);
+//       Serial.print(" ");
+//     }
 
-    Serial.println("]");
+//     Serial.println("]");
 
-    controlBuzzer(freqs, freqsLen, timings, timingsLen);
-  }
-  break;
-  case Command::CONTROL_LED_RING:
-  {
-    CRGB color;
-    LedRingAnimationEnum a;
-    uint16_t d;
-    espSerial.parseLedRingPacket(p, color, a, d);
+//     controlBuzzer(freqs, freqsLen, timings, timingsLen);
+//   }
+//   break;
+//   case Command::CONTROL_LED_RING:
+//   {
+//     CRGB color;
+//     LedRingAnimationEnum a;
+//     uint16_t d;
+//     espSerial.parseLedRingPacket(p, color, a, d);
 
-    Serial.println((String)"[CONTROL LED RING] color: [" + color.r + ", " + color.g + ", " + color.b + "], duration = " + d);
-    controlLedRing(color, a, d);
-  }
-  break;
-  case Command::RESP: break;
-  case Command::CARD_READER_RESPONSE: break;
-  case Command::GET_VERSION_RESP: break;
-  default:
-    break;
-  }
-}
+//     Serial.println((String)"[CONTROL LED RING] color: [" + color.r + ", " + color.g + ", " + color.b + "], duration = " + d);
+//     controlLedRing(color, a, d);
+//   }
+//   break;
+//   case Command::RESP: break;
+//   case Command::CARD_READER_RESPONSE: break;
+//   case Command::GET_VERSION_RESP: break;
+//   default:
+//     break;
+//   }
+// }
 
 
 void Device::cardReaden(const uint8_t* cardUID) {
