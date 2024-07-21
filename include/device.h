@@ -35,6 +35,8 @@ public:
   void controlLedRing(CRGB color, LedRingAnimationEnum animation, uint16_t duration);
   void controlBuzzer(const uint16_t* buzzTones, uint8_t buzzTonesLen, const uint16_t* buzzTimings, uint8_t buzzTimingsLen);
   void listenCardReader(uint8_t id);
+  void valveControl();
+  int watermeter();
 };
 
 extern Device device;
