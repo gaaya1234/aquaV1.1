@@ -10,26 +10,18 @@
 #define LCD_CLK_PIN             5
 #define LCD_DATA_PIN            7
 #define BUZZER_PIN              12
-#define CARD_READER_TX_PIN      52
-#define CARD_READER_RX_PIN      53
+#define CARD_READER_RX_PIN      21
+#define CARD_READER_TX_PIN      19
 #define BUILTIN_LED             13
 #define WATER_COUNTING_PIN      4
 #define BUTTON_PIN              2
 
 
 // TIME
-#define ChargingThresholdTime   60000
-#define VehicleConnectionTime   60000
 #define MINUTE                  60000UL
 #define SECOND                  1000UL
 
 
-#ifndef K_DEBUG
-#define NETWORK_WAIT                 180000UL // 3 min.
-#define BARRIER_PARKING_WAIT_TIME    120000UL // 2 min.
-#else
-#define BARRIER_PARKING_WAIT_TIME    3000UL  
-#define NETWORK_WAIT                 180000UL
-#endif
-
+#define NETWORK_WAIT            3*MINUTE
+#define WAIT_TIME               1*MINUTE
 #endif

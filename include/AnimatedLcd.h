@@ -68,11 +68,6 @@ public:
     lcd.updateRow(i, str, Align::Right).apply();
   }
 
-  void printRows(String str1, String str2, String str3) {
-    a[0] = a[1] = a[2] = TextAnimation::NONE;
-    lcd.updateRows(str1, str2, str3, Align::Right, Align::Right, Align::Right).apply();
-  }
-
   void process() {
     for (int i = 0; i < 3; ++i) {
       if (a[i] == NONE) continue;

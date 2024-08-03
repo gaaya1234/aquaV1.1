@@ -73,7 +73,7 @@ class CardReader {
   typedef void (*readCardCB)(const uint8_t* CardUID);
 
 #ifndef CARD_READER_HARDWARE_SERIAL
-  Espsoftware serial;
+  EspSoftwareSerial::UART serial;
 #else
   HardwareSerial serial;
 #endif
